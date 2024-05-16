@@ -1,0 +1,45 @@
+﻿@inject IPasswordManagerAPIConsumerService apiConsumerService
+@inject AuthenticationStateProvider authStateProvider
+@inject ILocalStorageService localStorageService;
+
+<CascadingAuthenticationState>
+    <CascadingBlazoredModal Position="ModalPosition.Middle">
+        <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="OnNavigateAsync">
+            <Found Context="routeData">
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+            </Found>
+            <NotFound>
+                <PageTitle>Not found</PageTitle>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p role="alert">Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </NotFound>
+        </Router>
+
+    </CascadingBlazoredModal>
+</CascadingAuthenticationState>
+
+
+@code {
+    private async Task OnNavigateAsync(NavigationContext context)
+    {
+        var auth =  await localStorageService.GetItemAsync<string>("isauthenticated");
+        var user = (await( authStateProvider as CustomAuthStateProvider)
+        .GetAuthenticationStateAsync()).User;
+
+        if(!string.IsNullOrEmpty(auth) && !user.Identity.IsAuthenticated ){
+            var response = await apiConsumerService.GetUserProfileAsync();
+            if (response.Msg == "success")
+            {
+                (authStateProvider as CustomAuthStateProvider).SetAuthInfo(response.UserDTO);
+            }
+            else if (response.Msg == "unauthenticated")
+            {
+                //Console.WriteLine("couldn't get user info from server");
+                await localStorageService.RemoveItemAsync("isauthenticated");
+            }
+        }
+
+    }
+}

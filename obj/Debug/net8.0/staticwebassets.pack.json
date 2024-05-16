@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/bin/Debug/net8.0/wwwroot/_framework/blazor.webassembly.js",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/obj/Debug/net8.0/compressed/5situxrcsu.gz",
+      "PackagePath": "staticwebassets/_framework/blazor.webassembly.js.gz"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/obj/Debug/net8.0/scopedcss/bundle/LeoPasswordManagerUI.styles.css",
+      "PackagePath": "staticwebassets/LeoPasswordManagerUI.styles.css"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/css/app.css",
+      "PackagePath": "staticwebassets/css/app.css"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/css/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/css/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/css/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/icon-192.png",
+      "PackagePath": "staticwebassets/icon-192.png"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/index.html",
+      "PackagePath": "staticwebassets/index.html"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/sample-data/weather.json",
+      "PackagePath": "staticwebassets/sample-data/weather.json"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.LeoPasswordManagerUI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.LeoPasswordManagerUI.props",
+      "PackagePath": "build\\LeoPasswordManagerUI.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.LeoPasswordManagerUI.props",
+      "PackagePath": "buildMultiTargeting\\LeoPasswordManagerUI.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.LeoPasswordManagerUI.props",
+      "PackagePath": "buildTransitive\\LeoPasswordManagerUI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

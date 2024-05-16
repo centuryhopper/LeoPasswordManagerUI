@@ -1,0 +1,32 @@
+@inject IPasswordManagerAPIConsumerService apiConsumerService
+@inject NavigationManager NavManager
+@inject ILocalStorageService localStorageService
+@inject AuthenticationStateProvider authStateProvider
+
+
+
+
+<AuthorizeView>
+    <Authorized>
+        <a href="#">Hi @context.User.Identity?.Name!</a>
+        <button type="button" class="nav-link btn btn-link" @onclick="Logout">Log Out</button>
+    </Authorized>
+    <NotAuthorized>
+        <a href="login">Log In</a>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+    @code {
+        private async Task Logout()
+        {
+            var response = await apiConsumerService.LogoutAsync();
+            if (response.flag)
+            {
+                (authStateProvider as CustomAuthStateProvider).ClearAuthInfo();
+                await localStorageService.RemoveItemAsync("isauthenticated");
+                NavManager.NavigateTo("/", true);
+            }
+     
+        }
+    }

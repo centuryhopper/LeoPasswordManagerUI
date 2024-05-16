@@ -1,0 +1,85 @@
+@page "/login"
+
+@inject NavigationManager NavManager
+@inject IPasswordManagerAPIConsumerService apiConsumerService
+@inject ILocalStorageService localStorageService
+
+
+<div class="container-fluid">
+    <EditForm 
+        Model="@Model"
+        OnValidSubmit="HandleLogin"
+        OnInvalidSubmit="ShowErrors">
+        <div class="card">
+            <h4 class="text-center card-header">
+                Log in
+            </h4>
+            <div class="card-body">
+                <DataAnnotationsValidator/>
+                <p class="form-group">
+                    <label class="m-2">Email</label>
+                    <RadzenTextBox @bind-value="@Model.Email" class="form-control" />
+                    <ValidationMessage For="@(() => Model.Email)"/>
+                </p>
+                <p class="form-group">
+                    <label class="m-2">Password</label>
+                    <RadzenPassword class="form-control" @bind-value="@Model.Password" Visible="@(PasswordVisible == false)" />
+                    <RadzenTextBox class="form-control" @bind-value="@Model.Password" Visible="@PasswordVisible" />
+                    <br>
+                    Show password <RadzenCheckBox @bind-Value="@PasswordVisible" />
+                    <ValidationMessage For="@(() => Model.Password)"/>
+                </p>
+            </div>
+            <div class="m-3">
+                <button disabled="@Loading" class="btn btn-primary">Login</button>
+                @if (Loading)
+                {
+                    <span class="spinner-border spinner-border-sm"></span>
+                }
+            </div>
+        </div>
+        <div class="text-center">
+            <p>
+                Don't have an account?
+                <a href="register">Sign up</a>
+            </p>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+    private LoginDTO Model = new();
+    private bool PasswordVisible = false;
+    private bool Loading = false;
+    //private bool ShouldRegister = false;
+    //private bool ShouldConfirmEmail = false;
+    //private bool InvalidLogin = false;
+
+    private async Task HandleLogin()
+    {
+        var response = await apiConsumerService.LoginAsync(Model);
+        if (response.flag)
+        {
+            await localStorageService.SetItemAsStringAsync("isauthenticated", "true");
+            // go to home
+            NavManager.NavigateTo("", true);
+        }
+        else
+        {
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(PopupDialog.Message), response.msg);
+            Modal.Show<PopupDialog>("Error", parameters);
+        }
+
+    }
+
+    private void ShowErrors()
+    {
+
+    }
+
+}
