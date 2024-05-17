@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "w/Z7RHVhn+CwEJB6iT9JCFZrmhCAxu6N4B+bzytB1Bs=",
+  "Hash": "HpnjCDFZNZdkkY8eQHhD57loKbOIvo4uzdvZzZt9UQ4=",
   "Source": "LeoPasswordManagerUI",
   "BasePath": "/",
   "Mode": "Root",
@@ -9441,6 +9441,25 @@
       "OriginalItemSpec": "wwwroot/index.html"
     },
     {
+      "Identity": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/js/SaveAsFile.js",
+      "SourceId": "LeoPasswordManagerUI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/",
+      "BasePath": "/",
+      "RelativePath": "js/SaveAsFile.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/SaveAsFile.js"
+    },
+    {
       "Identity": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/sample-data/weather.json",
       "SourceId": "LeoPasswordManagerUI",
       "SourceType": "Discovered",
@@ -9458,6 +9477,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/sample-data/weather.json"
+    },
+    {
+      "Identity": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/templates/example.csv",
+      "SourceId": "LeoPasswordManagerUI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/",
+      "BasePath": "/",
+      "RelativePath": "templates/example.csv",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/templates/example.csv"
     }
   ]
 }

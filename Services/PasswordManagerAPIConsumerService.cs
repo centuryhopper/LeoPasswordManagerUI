@@ -29,6 +29,7 @@ update
 */
     public async Task<PasswordManagerAccountDTO?> CreateAsync(PasswordManagerAccountDTO model)
     {
+        System.Console.WriteLine("creating password account");
         var response = await httpClient.PostAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Passwords/create"), model);
 
         if (response.IsSuccessStatusCode)
@@ -96,7 +97,9 @@ update
             return new LoginResponse(true, "success");
         }
 
-        return new LoginResponse(false, "failed to login");
+        var msg = (await response.Content.ReadFromJsonAsync<LoginResponse>()).msg;
+
+        return new LoginResponse(false, msg: msg);
     }
 
     public async Task<ServiceResponse> LogoutAsync()

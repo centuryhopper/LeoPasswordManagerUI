@@ -37,8 +37,16 @@
       "PackagePath": "staticwebassets/index.html"
     },
     {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/js/SaveAsFile.js",
+      "PackagePath": "staticwebassets/js/SaveAsFile.js"
+    },
+    {
       "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/sample-data/weather.json",
       "PackagePath": "staticwebassets/sample-data/weather.json"
+    },
+    {
+      "Id": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/wwwroot/templates/example.csv",
+      "PackagePath": "staticwebassets/templates/example.csv"
     },
     {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.LeoPasswordManagerUI.Microsoft.AspNetCore.StaticWebAssets.props",

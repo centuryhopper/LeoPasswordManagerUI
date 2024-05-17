@@ -1,0 +1,23 @@
+<div class="text-center">
+    <div class="m-1">@Message</div>
+
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-2">
+            <button @onclick="No" class="btn-with-shadow btn btn-primary m-3">No</button>
+        </div>
+        <div class="col-2">
+            <button @onclick="Yes" class="btn-with-shadow btn btn-primary m-3">Yes</button>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    [Parameter] public string? Message { get; set; }
+
+    private async Task Yes() => await BlazoredModal.CloseAsync();
+    private async Task No() => await BlazoredModal.CancelAsync();
+}

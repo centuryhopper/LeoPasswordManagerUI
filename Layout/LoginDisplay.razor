@@ -25,6 +25,7 @@
             {
                 (authStateProvider as CustomAuthStateProvider).ClearAuthInfo();
                 await localStorageService.RemoveItemAsync("isauthenticated");
+                await localStorageService.RemoveItemAsync("userid");
                 NavManager.NavigateTo("/", true);
             }
      
