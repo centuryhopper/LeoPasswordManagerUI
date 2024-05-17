@@ -1,11 +1,13 @@
+@page "/editProfile"
 @inject IPasswordManagerAPIConsumerService apiConsumerService
-
 
 
 <style>
     .no-bullets {
-        list-style-type: none; /* Removes default bullets */
-        padding-left: 0; /* Optional: removes default left padding */
+        list-style-type: none;
+        /* Removes default bullets */
+        padding-left: 0;
+        /* Optional: removes default left padding */
     }
 </style>
 
@@ -84,12 +86,12 @@
 
     @* @if (EditMessages is not null && EditMessages.Any())
     {
-        <ul>
-            @foreach (var message in EditMessages)
-            {
-                <li class="display-6 no-bullets">@message</li>
-            }
-        </ul>
+    <ul>
+    @foreach (var message in EditMessages)
+    {
+    <li class="display-6 no-bullets">@message</li>
+    }
+    </ul>
     } *@
 </div>
 
@@ -106,7 +108,7 @@
     private IEnumerable<RoleDTO> Roles { get; set; }
     private IEnumerable<string> EditMessages { get; set; }
     private EditContext editContext;
-    private EditAccountDTO updatedUser {get;set;}
+    private EditAccountDTO updatedUser { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

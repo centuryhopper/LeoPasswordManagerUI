@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LeoPasswordManagerUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5430035251025133f9af98193994df123d1c64bf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e191da8ee16518c5c544a44427f605c81c60186")]
 [assembly: System.Reflection.AssemblyProductAttribute("LeoPasswordManagerUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LeoPasswordManagerUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using LeoPasswordManagerUI.DTOs;
 using LeoPasswordManagerUI.Models;
 using LeoPasswordManagerUI.Utils;
+using Microsoft.AspNetCore.Http;
 
 public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerService
 {
@@ -12,22 +13,58 @@ public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerServ
     {
         httpClient = httpClientFactory.CreateClient(Constants.HTTP_CLIENT_FACTORY);
     }
-    public Task<ServiceResponse> ChangePassword(ChangePasswordDTO changePasswordDTO)
+
+    public async Task<ServiceResponse> ChangePassword(ChangePasswordDTO changePasswordDTO)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse> ConfirmEmailAsync()
+    public async Task<ServiceResponse> ConfirmEmailAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResponse> DeleteUserAsync(string userId)
+/*
+update
+*/
+    public async Task<PasswordManagerAccountDTO?> CreateAsync(PasswordManagerAccountDTO model)
+    {
+        var response = await httpClient.PostAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Passwords/create"), model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return model;
+        }
+
+        return null;
+    }
+
+    public async Task<PasswordManagerAccountDTO?> DeletePasswordManagerAccountAsync(PasswordManagerAccountDTO model)
+    {
+        var response = await httpClient.DeleteAsync(Path.Combine(Constants.SERVER_BASE_URL, $"api/Passwords/delete/?passwordAccountId={model.Id}&userId={model.Userid}"));
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<PasswordManagerAccountDTO?>();
+        }
+
+        return null;
+    }
+
+    public async Task<ServiceResponse> DeleteUserAsync(string userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<RoleDTO>> GetRolesAsync()
+    public async Task<IEnumerable<PasswordManagerAccountDTO>> GetAllAccountsAsync()
+    {
+        var response = await httpClient.GetFromJsonAsync<IEnumerable<PasswordManagerAccountDTO>>(Path.Combine(Constants.SERVER_BASE_URL, $"api/Passwords/getaccounts"));
+
+
+        return response is null ? Enumerable.Empty<PasswordManagerAccountDTO>() : response;
+    }
+
+    public async Task<IEnumerable<RoleDTO>> GetRolesAsync()
     {
         throw new NotImplementedException();
     }
@@ -44,7 +81,7 @@ public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerServ
         if (userDto.StatusCode == System.Net.HttpStatusCode.BadRequest)
         {
             return ("unauthenticated", null);
-        }        
+        }
 
         return ("failed", null);
 
@@ -75,13 +112,30 @@ public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerServ
 
     }
 
-    public Task<RegistrationResponse> RegisterAsync(RegisterDTO registerDTO)
+    public async Task<RegistrationResponse> RegisterAsync(RegisterDTO registerDTO)
     {
         throw new NotImplementedException();
     }
 
-    public Task<EditAccountDTO?> UpdateUserAsync(EditAccountDTO editAccountDTO)
+    public async Task<PasswordManagerAccountDTO?> UpdateAsync(PasswordManagerAccountDTO model)
+    {
+        var response = await httpClient.PutAsJsonAsync<PasswordManagerAccountDTO>(Path.Combine(Constants.SERVER_BASE_URL, "api/Passwords/update"), model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<PasswordManagerAccountDTO?>();
+        }
+
+        return null;
+    }
+
+    public async Task<EditAccountDTO?> UpdateUserAsync(EditAccountDTO editAccountDTO)
     {
         throw new NotImplementedException();
     }
+
+    // public async Task<ServiceResponse> UploadCsvAsync(IFormFile file, string userid)
+    // {
+    //     var response = await httpClient.GetAsync
+    // }
 }
