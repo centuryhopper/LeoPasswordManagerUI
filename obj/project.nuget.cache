@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9FNJAIFE1S/4tukNI4uIaDEz0MhsEGGwGMMyeBYTb/37ZEhykhSdjF/KmhUfRf7sGVhUkUOiQKFXI8w3Bg+tHQ==",
+  "dgSpecHash": "IFtVUpLaMlB/Ku18R+ecKS5KOOgGUZKy++WG+e9n2JzTtSGg5mUrYy/GFP/PVdghzmlZDN0hRf/SEhA8FX0CRQ==",
   "success": true,
   "projectFilePath": "/home/leo_zhang/Documents/GitHub/LeoPasswordManagerUI/LeoPasswordManagerUI.csproj",
   "expectedPackageFiles": [
@@ -12,6 +12,7 @@
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.analyzers/8.0.5/microsoft.aspnetcore.components.analyzers.8.0.5.nupkg.sha512",
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.authorization/8.0.5/microsoft.aspnetcore.components.authorization.8.0.5.nupkg.sha512",
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.forms/8.0.5/microsoft.aspnetcore.components.forms.8.0.5.nupkg.sha512",
+    "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.quickgrid/8.0.5/microsoft.aspnetcore.components.quickgrid.8.0.5.nupkg.sha512",
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.web/8.0.5/microsoft.aspnetcore.components.web.8.0.5.nupkg.sha512",
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.webassembly/8.0.3/microsoft.aspnetcore.components.webassembly.8.0.3.nupkg.sha512",
     "/home/leo_zhang/.nuget/packages/microsoft.aspnetcore.components.webassembly.authentication/8.0.5/microsoft.aspnetcore.components.webassembly.authentication.8.0.5.nupkg.sha512",

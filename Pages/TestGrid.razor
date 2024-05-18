@@ -1,0 +1,171 @@
+@page "/"
+@inject IPasswordManagerAPIConsumerService apiConsumerService
+
+@* 
+
+public string? Id { get; set; } = null!;
+
+    public string? Userid { get; set; } = null!;
+
+    public string? Title { get; set; } = null!;
+
+    public string? Username { get; set; } = null!;
+
+    public string? Password { get; set; } = null!;
+
+    public string? CreatedAt { get; set; }
+
+    public string? LastUpdatedAt { get; set; }
+
+ *@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <EditForm Model="model" OnSubmit="AddAccount" Enhance>
+                        <div class="hstack gap-2">
+                            <label class="label-control">Title</label>
+                            <InputText @bind-Value="model.Title" class="form-control"></InputText>
+                            <label class="label-control">Date Added</label>
+                            <InputDate @bind-Value="SelectedDate" class="form-control "></InputDate>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <div class="card-body">
+                    <QuickGrid Items="@accountQueryable" Pagination="pagination">
+                        <PropertyColumn Property="@(p => p.Username)" Sortable="false" Align="Align.Center" />
+                        <PropertyColumn Property="@(p => p.Password)" Sortable="false" Align="Align.Center" />
+
+                        <PropertyColumn Property="@(c => c.Title)" Sortable="true" Class="country-name">
+                            <ColumnOptions>
+                                <div class="search-box">
+                                    <input type="search" autofocus @onchange="SearchPasswordAccount" placeholder="Password account title..." />
+                                </div>
+                            </ColumnOptions>
+                        </PropertyColumn>
+
+                        <PropertyColumn Property="@(p => p.CreatedAt)" Sortable="true" />
+
+                        <PropertyColumn Property="@(p => p.LastUpdatedAt)" Sortable="true" />
+                   
+                        <TemplateColumn Title="Action">
+                            <button @onclick="@(() => Edit(context))" class="btn btn-info">Edit</button>
+                            <button @onclick="@(() => Delete(context))" class="btn btn-danger">Delete</button>
+                        </TemplateColumn>
+                    </QuickGrid>
+                </div>
+                <div class="card-footer"><Paginator State="@pagination" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@code {
+
+    //Pagination
+    PaginationState pagination = new PaginationState { ItemsPerPage = 3 };
+    private IQueryable<PasswordManagerAccountDTO> accountQueryable = Enumerable.Empty<PasswordManagerAccountDTO>().AsQueryable();
+
+    [SupplyParameterFromForm]
+    PasswordManagerAccountDTO model {get;set;} = new();
+
+    private static List<PasswordManagerAccountDTO> accountLst = new();
+    private DateOnly SelectedDate;
+
+    protected override async Task OnInitializedAsync()
+    {
+         ConvertListToQueryable();
+    }
+
+    private async Task AddAccount()
+    {
+        model.CreatedAt = SelectedDate.ToString();
+
+        // Update
+        if (!string.IsNullOrEmpty(model.Id))
+        {
+            var p = accountLst.FirstOrDefault(_ => _.Id == model.Id);
+            if (p is null) return;
+            accountLst.Remove(p);
+            accountLst.Add(model);
+            model = new();
+            GetDataAgain(); 
+            return;
+        }
+
+        //Add
+        if (string.IsNullOrEmpty(model.Title))
+        {
+            return;
+        }
+
+        model.Id = Guid.NewGuid().ToString();
+        accountLst.Add(model); 
+        model = new();
+        GetDataAgain();
+        return;
+    }
+
+    // Load data from List to the Queryable container
+    private void ConvertListToQueryable()
+    {
+        if (accountLst is null) return;
+        foreach (var account in accountLst.OrderBy(_ => _.LastUpdatedAt))
+        {
+            accountQueryable = accountQueryable.Concat(new[] { account }.AsQueryable());
+        }
+        pagination.TotalItemCountChanged += (sender, eventArgs) => StateHasChanged();
+    }
+
+    //clear container and reload
+    void GetDataAgain()
+    {
+        accountQueryable = Enumerable.Empty<PasswordManagerAccountDTO>().AsQueryable();
+        ConvertListToQueryable();
+    }
+
+    void Edit(PasswordManagerAccountDTO incomingModel)
+    {
+        //SelectedDate = DateOnly.Parse(incomingModel.CreatedAt!);
+        SelectedDate = DateOnly.FromDateTime(DateTime.Now);
+        model = incomingModel;
+    }
+
+    void Delete(PasswordManagerAccountDTO incomingModel)
+    {
+        accountLst.Remove(accountLst.FirstOrDefault(_ => _.Id == incomingModel.Id));
+        if (accountLst is null) return;
+        GetDataAgain();
+    }
+
+    //Search Password Account
+    void SearchPasswordAccount(ChangeEventArgs e)
+    {
+        if (!string.IsNullOrEmpty(e.Value!.ToString()))
+        {
+            var result = accountLst.Where(c => c.Title!.Contains(e.Value!.ToString()!, StringComparison.CurrentCultureIgnoreCase)).ToList();
+            accountQueryable = Enumerable.Empty<PasswordManagerAccountDTO>().AsQueryable();
+            
+            if (result.Count == 0)
+            {
+                return;
+            }
+
+            if (result.Any())
+            {
+                foreach (var account in result.OrderBy(_ => _.CreatedAt))
+                    accountQueryable = accountQueryable.Concat(new[] { account }.AsQueryable());
+            }
+            return;
+        }
+        GetDataAgain();
+    }
+
+
+}
