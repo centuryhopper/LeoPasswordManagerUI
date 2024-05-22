@@ -25,10 +25,13 @@
     private async Task OnNavigateAsync(NavigationContext context)
     {
         var auth =  await localStorageService.GetItemAsync<string>("isauthenticated");
+        //Console.WriteLine(auth);
         var user = (await( authStateProvider as CustomAuthStateProvider)
         .GetAuthenticationStateAsync()).User;
 
-        if(!string.IsNullOrEmpty(auth) && !user.Identity.IsAuthenticated ){
+        //Console.WriteLine(user.Claims.Count());
+
+        if(!string.IsNullOrEmpty(auth) && !user.Identity.IsAuthenticated){
             var response = await apiConsumerService.GetUserProfileAsync();
             if (response.Msg == "success")
             {

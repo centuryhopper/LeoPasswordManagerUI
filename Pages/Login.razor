@@ -63,7 +63,10 @@
 
     private async Task HandleLogin()
     {
+        Console.WriteLine("logging in");
         var response = await apiConsumerService.LoginAsync(Model);
+        Console.WriteLine(response.msg);
+        await Task.Delay(10000);
         if (response.flag)
         {
             await localStorageService.SetItemAsStringAsync("isauthenticated", "true");
