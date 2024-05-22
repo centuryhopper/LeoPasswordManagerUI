@@ -1,6 +1,7 @@
 @page "/editProfile"
 @inject IPasswordManagerAPIConsumerService apiConsumerService
-
+@inject ILocalStorageService localStorageService
+@attribute [Authorize]
 
 <style>
     .no-bullets {
@@ -69,7 +70,7 @@
                         <select class="form-control" @bind="@Model.Role">
                             @foreach (var role in Roles)
                             {
-                                <option value="@role">@role</option>
+                                <option value="@role.RoleName">@role.RoleName</option>
                             }
                         </select>
                     }
@@ -102,16 +103,17 @@
     private bool OldPasswordVisible, NewPasswordVisible;
     private bool showErrors, isLoading;
 
-    [Parameter]
-    public string UserId { get; set; }
 
     private IEnumerable<RoleDTO> Roles { get; set; }
     private IEnumerable<string> EditMessages { get; set; }
     private EditContext editContext;
-    private EditAccountDTO updatedUser { get; set; }
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        var userId = await localStorageService.GetItemAsync<string>("userid");
+        Model = await apiConsumerService.GetEditAccountUserAsync(userId);
         editContext = new(Model);
         Roles = await apiConsumerService.GetRolesAsync();
         //foreach (var role in Roles)
@@ -127,16 +129,18 @@
 
     private async Task HandleEditProfile()
     {
+
         // update user info
         // any non null values will be updated
         // only update user password to the new one if the old password is correct.
-        Model.Id = UserId;
         isLoading = true;
-        updatedUser = await apiConsumerService.UpdateUserAsync(Model);
+        Model.Id = await localStorageService.GetItemAsync<string>("userid");
+        var response = await apiConsumerService.UpdateUserAsync(Model);
         isLoading = false;
-        if (updatedUser is not null)
-            Model = new();
-        //await jsRuntime.InvokeVoidAsync("alert", string.Join("\n", EditMessages));
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(PopupDialog.Message), response.message);
+        Modal.Show<PopupDialog>(response.flag ? "Success" : "Error", parameters);
+        Model = new();
     }
 
     private async Task ShowErrors()

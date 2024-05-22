@@ -1,9 +1,8 @@
-
 using System.Net.Http.Json;
 using LeoPasswordManagerUI.DTOs;
 using LeoPasswordManagerUI.Models;
 using LeoPasswordManagerUI.Utils;
-using Microsoft.AspNetCore.Http;
+
 
 public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerService
 {
@@ -16,17 +15,40 @@ public class PasswordManagerAPIConsumerService : IPasswordManagerAPIConsumerServ
 
     public async Task<ServiceResponse> ChangePassword(ChangePasswordDTO changePasswordDTO)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.PostAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, $"api/Account/change-password"), changePasswordDTO);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ServiceResponse>() ?? new ServiceResponse(false, "error changing password");
+        }
+
+        return new ServiceResponse(false, "couldn't change password");
     }
 
-    public async Task<ServiceResponse> ConfirmEmailAsync()
+    public async Task<EditAccountDTO?> GetEditAccountUserAsync(string userId)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.GetAsync(Path.Combine(Constants.SERVER_BASE_URL, $"api/Account/get-edit-profile/{userId}"));
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<EditAccountDTO>();
+        }
+
+        return null;
     }
 
-/*
-update
-*/
+    public async Task<ServiceResponse> ConfirmEmailAsync(string token, string userId)
+    {
+        var response = await httpClient.GetAsync(Path.Combine(Constants.SERVER_BASE_URL, $"api/Account/confirm-email/?token={token}&userId={userId}"));
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ServiceResponse>() ?? new ServiceResponse(false, "error getting delete user result");
+        }
+
+        return new ServiceResponse(false, "error deleting user");
+    }
+
     public async Task<PasswordManagerAccountDTO?> CreateAsync(PasswordManagerAccountDTO model)
     {
         System.Console.WriteLine("creating password account");
@@ -54,7 +76,14 @@ update
 
     public async Task<ServiceResponse> DeleteUserAsync(string userId)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.DeleteAsync(Path.Combine(Constants.SERVER_BASE_URL, $"api/Account/delete-user/{userId}"));
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ServiceResponse>() ?? new ServiceResponse(false, "error getting delete user result");
+        }
+
+        return new ServiceResponse(false, "error deleting user");
     }
 
     public async Task<IEnumerable<PasswordManagerAccountDTO>> GetAllAccountsAsync()
@@ -67,7 +96,14 @@ update
 
     public async Task<IEnumerable<RoleDTO>> GetRolesAsync()
     {
-        throw new NotImplementedException();
+        var response = await httpClient.GetAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Account/get-roles"));
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<IEnumerable<RoleDTO>>() ?? Enumerable.Empty<RoleDTO>();
+        }
+
+        return Enumerable.Empty<RoleDTO>(); 
     }
 
     public async Task<(string Msg, UserDTO? UserDTO)> GetUserProfileAsync()
@@ -117,12 +153,19 @@ update
 
     public async Task<RegistrationResponse> RegisterAsync(RegisterDTO registerDTO)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.PostAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Account/register"), registerDTO);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return new RegistrationResponse(true, "registration success");
+        }
+
+        return new RegistrationResponse(false, "failed to register user");
     }
 
     public async Task<PasswordManagerAccountDTO?> UpdateAsync(PasswordManagerAccountDTO model)
     {
-        var response = await httpClient.PutAsJsonAsync<PasswordManagerAccountDTO>(Path.Combine(Constants.SERVER_BASE_URL, "api/Passwords/update"), model);
+        var response = await httpClient.PutAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Passwords/update"), model);
 
         if (response.IsSuccessStatusCode)
         {
@@ -132,13 +175,17 @@ update
         return null;
     }
 
-    public async Task<EditAccountDTO?> UpdateUserAsync(EditAccountDTO editAccountDTO)
+    public async Task<ServiceResponse> UpdateUserAsync(EditAccountDTO editAccountDTO)
     {
-        throw new NotImplementedException();
+        var response = await httpClient.PutAsJsonAsync(Path.Combine(Constants.SERVER_BASE_URL, "api/Account/update-user-details"), editAccountDTO);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ServiceResponse>() ?? new ServiceResponse(false, "response was successful, but still couldn't update user for some reason");
+        }
+
+        return new ServiceResponse(false, "error updating user");
     }
 
-    // public async Task<ServiceResponse> UploadCsvAsync(IFormFile file, string userid)
-    // {
-    //     var response = await httpClient.GetAsync
-    // }
+
 }
