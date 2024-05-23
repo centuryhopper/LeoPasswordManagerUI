@@ -24,7 +24,8 @@ builder.Services
         Constants.HTTP_CLIENT_FACTORY,
         client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
     )
-    .AddHttpMessageHandler<CookieHandler>();
+    .AddHttpMessageHandler<CookieHandler>()
+    .AddHttpMessageHandler<UnauthorizedDelegatingHandler>();
 
 // Supply HttpClient instances that include access tokens when making requests
 // to the server project
@@ -32,11 +33,17 @@ builder.Services.AddScoped(
     sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(Constants.HTTP_CLIENT_FACTORY)
 );
 
+builder.Services.AddBlazoredLocalStorageAsSingleton();
+
 builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
-builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+// builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddSingleton<CustomAuthStateProvider>();
+builder.Services.AddSingleton<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
+
+// builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 builder.Services.AddScoped<IPasswordManagerAPIConsumerService, PasswordManagerAPIConsumerService>();
 builder.Services.AddScoped<CookieHandler>();
+builder.Services.AddScoped<UnauthorizedDelegatingHandler>();
 
 await builder.Build().RunAsync();

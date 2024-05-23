@@ -4,7 +4,7 @@
 
 <CascadingAuthenticationState>
     <CascadingBlazoredModal Position="ModalPosition.Middle">
-        <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="OnNavigateAsync">
+        <Router AppAssembly="@typeof(App).Assembly">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
                 <FocusOnNavigate RouteData="@routeData" Selector="h1" />
@@ -22,30 +22,34 @@
 
 
 @code {
-    private async Task OnNavigateAsync(NavigationContext context)
-    {
-        var auth =  await localStorageService.GetItemAsync<string>("isauthenticated");
-        //Console.WriteLine(auth);
-        var user = (await( authStateProvider as CustomAuthStateProvider)
-        .GetAuthenticationStateAsync()).User;
 
-        //Console.WriteLine(user.Claims.Count());
-
-        if(!string.IsNullOrEmpty(auth) && !user.Identity.IsAuthenticated){
-            var response = await apiConsumerService.GetUserProfileAsync();
-            if (response.Msg == "success")
-            {
-                (authStateProvider as CustomAuthStateProvider).SetAuthInfo(response.UserDTO);
-
-                await localStorageService.SetItemAsStringAsync("userid", response.UserDTO.Id);
-            }
-            else if (response.Msg == "unauthenticated")
-            {
-                //Console.WriteLine("couldn't get user info from server");
-                await localStorageService.RemoveItemAsync("isauthenticated");
-                await localStorageService.RemoveItemAsync("userid");
-            }
-        }
-
-    }
+    //private async Task OnNavigateAsync(NavigationContext context)
+    //{
+    //    var auth = await localStorageService.GetItemAsync<string>("isauthenticated");
+    //    //Console.WriteLine(auth);
+    //    var user = (await (authStateProvider as CustomAuthStateProvider)
+    //    .GetAuthenticationStateAsync()).User;
+//
+    //    //Console.WriteLine(user.Claims.Count());
+//
+    //    if (!string.IsNullOrEmpty(auth) && !user.Identity.IsAuthenticated)
+    //    {
+    //        var response = await apiConsumerService.GetUserProfileAsync();
+    //        if (response.Msg == "success")
+    //        {
+    //            //(authStateProvider as CustomAuthStateProvider).SetAuthInfo(response.UserDTO);
+    //            (authStateProvider as CustomAuthStateProvider).SetCurrentUserAsync(response.UserDTO);
+//
+    //            await localStorageService.SetItemAsStringAsync("userid", response.UserDTO.Id);
+    //        }
+    //        else if (response.Msg == "unauthenticated")
+    //        {
+    //            //Console.WriteLine("couldn't get user info from server");
+    //            await localStorageService.RemoveItemAsync("isauthenticated");
+    //            await localStorageService.RemoveItemAsync("userid");
+    //        }
+    //    }
+//
+    //}
+    
 }

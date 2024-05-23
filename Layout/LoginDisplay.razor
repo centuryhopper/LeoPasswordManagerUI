@@ -23,9 +23,11 @@
             var response = await apiConsumerService.LogoutAsync();
             if (response.flag)
             {
-                (authStateProvider as CustomAuthStateProvider).ClearAuthInfo();
-                await localStorageService.RemoveItemAsync("isauthenticated");
-                await localStorageService.RemoveItemAsync("userid");
+                //(authStateProvider as CustomAuthStateProvider).ClearAuthInfo();
+                await (authStateProvider as CustomAuthStateProvider)!.SetCurrentUserAsync(null);
+
+                //await localStorageService.RemoveItemAsync("isauthenticated");
+                //await localStorageService.RemoveItemAsync("userid");
                 NavManager.NavigateTo("/", true);
             }
      

@@ -3,6 +3,7 @@
 @inject NavigationManager NavManager
 @inject IPasswordManagerAPIConsumerService apiConsumerService
 @inject ILocalStorageService localStorageService
+@inject CustomAuthStateProvider customAuthStateProvider
 
 
 <div class="container-fluid">
@@ -65,11 +66,15 @@
     {
         Console.WriteLine("logging in");
         var response = await apiConsumerService.LoginAsync(Model);
-        Console.WriteLine(response.msg);
-        await Task.Delay(10000);
+        //Console.WriteLine(response.msg);
+
+
         if (response.flag)
         {
-            await localStorageService.SetItemAsStringAsync("isauthenticated", "true");
+            var me = await apiConsumerService.GetUserProfileAsync();
+            await customAuthStateProvider.SetCurrentUserAsync(me.UserDTO);
+            
+            //await localStorageService.SetItemAsStringAsync("isauthenticated", "true");
             // go to home
             NavManager.NavigateTo("", true);
         }
