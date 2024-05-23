@@ -24,7 +24,10 @@ Console.WriteLine(builder.HostEnvironment.BaseAddress);
 builder.Services
     .AddHttpClient(
         Constants.HTTP_CLIENT_FACTORY,
-        client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+        client => {
+            // client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+            client.BaseAddress = new Uri(Constants.SERVER_BASE_URL);
+        }
     )
     .AddHttpMessageHandler<CookieHandler>()
     .AddHttpMessageHandler<UnauthorizedDelegatingHandler>();

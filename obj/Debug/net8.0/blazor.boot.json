@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "LeoPasswordManagerUI",
   "resources": {
-    "hash": "sha256-jnoHiRqePibb68bfOpVervnVi+uIuUWcx1wK2FApFDk=",
+    "hash": "sha256-KWxzxl4NJJdtqCEhOE7CTTQFlDMVjenba6KTjoaVXOg=",
     "jsModuleNative": {
       "dotnet.native.8.0.3.vukwvwsttm.js": "sha256-D4sYBYmDfH/YekgYRgX959/2RG6k28sJSHmcsn+iikk="
     },
@@ -226,10 +226,10 @@
       "mscorlib.wasm": "sha256-/xjZuJwCmantx5vGyH5ZZ8keySSTeu+YHKQRJbZzcuM=",
       "netstandard.wasm": "sha256-vuFKmCGJbyv85DrzI6S1ZvCikuhIllH6hqbXIL+fUAA=",
       "System.Private.CoreLib.wasm": "sha256-SZkozEDkHEFN0VaDmhl2HOenGaqTOmHqEGkraz3Aejc=",
-      "LeoPasswordManagerUI.wasm": "sha256-hnlNLs55H4lWHOdZGUmT/gLPlqvDNow/bYt4dlS0wwI="
+      "LeoPasswordManagerUI.wasm": "sha256-/c+ND6a/G9VS+MR+DcjJnhQcxnTpdjvGZno4mH+guBk="
     },
     "pdb": {
-      "LeoPasswordManagerUI.pdb": "sha256-KbxnziGxNosi2UkgJNVZ5DKx0sstHxeLzBx6GB0nPBM="
+      "LeoPasswordManagerUI.pdb": "sha256-e9ajbgDd3e30Cy2iBvi5tsmaYeqzY/L6TfujZsgEsgQ="
     }
   },
   "debugLevel": -1,
