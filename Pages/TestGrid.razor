@@ -134,12 +134,14 @@ public string? Id { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine(Constants.SERVER_BASE_URL);
         await ConvertListToQueryable();
         UserId = await localStorageService.GetItemAsync<string>("userid");
     }
 
     private async Task AddAccountAsync()
     {
+
         var records = await apiConsumerService.GetAllAccountsAsync();
         model.LastUpdatedAt = SelectedDate.ToString("yyyy-MM-dd");
 

@@ -49,7 +49,7 @@ public class CustomAuthStateProvider : AuthenticationStateProvider
         else
         {
             await localStorageService.SetItemAsync(LocalStorageKey, currentUser);
-            await localStorageService.SetItemAsync("isauthenticated", currentUser is null);
+            await localStorageService.SetItemAsync("isauthenticated", true);
             await localStorageService.SetItemAsStringAsync("userid", currentUser!.Id);
         }
 

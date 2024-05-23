@@ -19,6 +19,8 @@ builder.Services.AddRadzenComponents();
 
 // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+Console.WriteLine(builder.HostEnvironment.BaseAddress);
+
 builder.Services
     .AddHttpClient(
         Constants.HTTP_CLIENT_FACTORY,
